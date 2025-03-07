@@ -22,6 +22,7 @@ jobs:
       TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
       TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       SPECIFIC_USER: ${{secrets.SPECIFIC_USER}}
+      PUSHPLUS_TOKEN: ${{secrets.PUSHPLUS_TOKEN}}
     steps:
       - uses: actions/checkout@v3 # 检出仓库
 
@@ -42,12 +43,12 @@ jobs:
           # 检查 .env 文件是否存在
           if [ -f .env ]; then
             echo ".env file found. Loading environment variables from .env file"
-            
+
             # 加载 .env 文件中的默认值
             set -a
             source .env
             set +a
-            
+
             echo "Loaded .env variables:"
           else
             echo ".env file not found. Skipping loading."

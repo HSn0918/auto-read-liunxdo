@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import TelegramBot from "node-telegram-bot-api";
+import axios from "axios";
 
 dotenv.config();
 
@@ -82,6 +83,34 @@ function delayClick(time) {
   });
 }
 
+async function sendToPushPlus(title, content) {
+  const pushPlusToken = process.env.PUSHPLUS_TOKEN; // 从环境变量中获取 PushPlus Token
+  if (!pushPlusToken) {
+    console.error("PushPlus Token is not defined.");
+    return;
+  }
+
+  const url = `http://www.pushplus.plus/send`;
+  const data = {
+    token: pushPlusToken,
+    title: title,
+    content: content,
+  };
+
+  try {
+    const response = await axios.post(url, data);
+    console.log("PushPlus message sent successfully:", response.data);
+  } catch (error) {
+    console.error("Error sending PushPlus message:", error);
+  }
+}
+
+// 脚本标题
+const scriptTitle = 'linuxdo自动阅读脚本';
+
+// PushPlus 消息标题
+const pushPlusTitle = 'linuxdo阅读脚本';
+
 (async () => {
   try {
     if (usernames.length !== passwords.length) {
@@ -144,6 +173,7 @@ function delayClick(time) {
     console.error("发生错误：", error);
     if (token && chatId) {
       sendToTelegram(`${error.message}`);
+      sendToPushPlus(pushPlusTitle, `${error.message}`);
     }
   }
 })();
@@ -283,6 +313,7 @@ async function launchBrowserForUser(username, password) {
     }
     if (token && chatId) {
       sendToTelegram(`${username} 登录成功`);
+      sendToPushPlus(pushPlusTitle, `${username} 登录成功`);
     }
     return { browser };
   } catch (err) {
@@ -290,6 +321,7 @@ async function launchBrowserForUser(username, password) {
     console.log("Error in launchBrowserForUser:", err);
     if (token && chatId) {
       sendToTelegram(`${err.message}`);
+      sendToPushPlus(pushPlusTitle, `${err.message}`);
     }
     return { browser }; // 错误时仍然返回 browser
   }
@@ -385,7 +417,7 @@ async function login(page, username, password, retryCount = 3) {
         return await login(page, username, password, retryCount - 1);
       } else {
         throw new Error(
-          `Navigation timed out in login.超时了,可能是IP质量问题,失败用户 ${username}, 
+          `Navigation timed out in login.超时了,可能是IP质量问题,失败用户 ${username},
       ${error}`
         ); //{password}
       }
