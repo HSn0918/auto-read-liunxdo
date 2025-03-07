@@ -99,7 +99,7 @@ async function sendToPushPlus(title, content) {
 
   try {
     const response = await axios.post(url, data);
-    console.log("PushPlus message sent successfully:", response.data);
+    console.log(`PushPlus message sent successfully: ${content}`);
   } catch (error) {
     console.error("Error sending PushPlus message:", error);
   }
