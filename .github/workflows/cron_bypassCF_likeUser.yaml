@@ -22,7 +22,6 @@ jobs:
       TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
       TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
       SPECIFIC_USER: ${{secrets.SPECIFIC_USER}}
-      PUSHPLUS_TOKEN: ${{secrets.PUSHPLUS_TOKEN}}
     steps:
       - uses: actions/checkout@v3 # 检出仓库
 
