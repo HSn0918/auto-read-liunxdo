@@ -63,4 +63,4 @@ jobs:
         shell: bash
 
       - name: Run a script
-        run: node bypasscf.js --USERNAMES "$USERNAMES" --PASSWORDS "$PASSWORDS" --WEBSITE "$WEBSITE"
+        run: node bypasscf.js --USERNAMES "$USERNAMES" --PASSWORDS "$PASSWORDS" --WEBSITE "$WEBSITE" --PUSHPLUS_TOKEN "$PUSHPLUS_TOKEN"
