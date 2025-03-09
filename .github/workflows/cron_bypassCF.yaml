@@ -21,6 +21,8 @@ jobs:
       RUN_TIME_LIMIT_MINUTES: ${{secrets.RUN_TIME_LIMIT_MINUTES}}
       TELEGRAM_BOT_TOKEN: ${{secrets.TELEGRAM_BOT_TOKEN}}
       TELEGRAM_CHAT_ID: ${{secrets.TELEGRAM_CHAT_ID}}
+      AUTO_LIKE: ${{secrets.AUTO_LIKE}}
+      LIKE_SPECIFIC_USER: ${{secrets.LIKE_SPECIFIC_USER}}
     steps:
       - uses: actions/checkout@v3 # 检出仓库
 
